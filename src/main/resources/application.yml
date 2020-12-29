@@ -1,0 +1,20 @@
+micronaut:
+  application:
+    name: 3xampleJavaMicronaut
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/ejavamicronaut
+    driverClassName: org.postgresql.Driver
+    username: jojelu
+    password: 'j'
+jpa:
+  default:
+    packages-to-scan:
+      - 'example.model'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+        show_sql: true
+application:
+  max: 50
