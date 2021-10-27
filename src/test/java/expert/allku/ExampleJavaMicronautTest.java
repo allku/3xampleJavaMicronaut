@@ -1,14 +1,14 @@
-package example;
+package expert.allku;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @MicronautTest
-public class _3xampleJavaMicronautTest {
+class ExampleJavaMicronautTest {
 
     @Inject
     EmbeddedApplication<?> application;

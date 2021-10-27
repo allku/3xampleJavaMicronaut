@@ -1,4 +1,4 @@
-package example;
+package expert.allku;
 
 import io.micronaut.runtime.Micronaut;
 

@@ -1,0 +1,61 @@
+package expert.allku.controller;
+
+import expert.allku.dto.BeerDto;
+import expert.allku.model.Beer;
+import expert.allku.repository.BeerRepository;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+
+@Controller("/rest/v1")
+public class BeerController {
+
+  protected final BeerRepository beerRepository;
+
+  public BeerController(BeerRepository beerRepository) {
+    this.beerRepository = beerRepository;
+  }
+
+  @Get(value = "/beers")
+  public List<Beer> all() {
+    return beerRepository.findAll();
+  }
+
+  @Get(value = "/beer/{id}")
+  public Beer show(Integer id) {
+    var beer = beerRepository
+            .findById(id).orElse(null);
+    return beer;
+  }
+
+  @Post(value = "/beer")
+  public HttpResponse<Beer> save(@Body @Valid BeerDto beerDto) {
+    Beer beer = beerRepository.save(beerDto);
+
+    return HttpResponse
+            .created(beer)
+            .headers(headers -> headers.location(location(beer.getId())));
+  }
+
+  @Put(value = "/beer/{id}")
+  public HttpResponse update(Integer id, @Body @Valid BeerDto beerDto) {
+    var beerId = beerRepository.update(id, beerDto);
+
+    return HttpResponse
+            .noContent()
+            .headers(headers -> headers.location(location(beerId)));
+  }
+
+  @Delete(value = "/beer/{id}")
+  public HttpResponse delete(Integer id) {
+    beerRepository.delete(id);
+    return HttpResponse.noContent();
+  }
+
+  protected URI location(Integer id) {
+    return URI.create("/beer/" + id);
+  }
+}

@@ -1,73 +1,98 @@
 # 3xampleJavaMicronaut
-Basic example project in Java with Micronaut
+Basic example project in Java with Micronaut Framework
 
-## Requirements
-* Java
+## Software
+* Java 11
 * Micronaut
-* Postgres 12
+* Postgres 12 or above
 
-## Create project
-```console
-cd 3xampleJavaMicronaut
+### Create database on GNU/Linux and MacOS with Postgres.app
 ```
-## Install requirements
-```console
-```
-
-## Create database
-### GNU/Linux
-```console
-sudo su - postgres
 createdb ejavamicronaut
+```
+```
 createuser jojelu
+```
+```
 psql
+```
+or
+```
+psql -d database -U user -W
+```
+```
 grant all privileges on database ejavamicronaut to jojelu;
+```
+```
 alter user jojelu with encrypted password 'j';
 ```
-
-### MacOS with Postgres.app
-```console
-createdb ejavamicronaut
-createuser jojelu
-psql
-grant all privileges on database ejavamicronaut to jojelu;
-alter user jojelu with encrypted password 'j';
+### Run
 ```
-
-### Migrate to database
-```console
-dotnet ef migrations add init
-dotnet ef database update
+gradle run 
 ```
-
-## Run
-```console
-dotnet run
-```
-
 ## Test
 Use HTTPie
 https://httpie.io/
-### POST
-```console
-http --verify no POST https://localhost:5001/api/rest/v1/books < files/new_book.json
+### GET
+```
+http http://localhost:8080/rest/v1/beers
 ```
 ### GET
-```console
-http --verify no https://localhost:5001/api/rest/v1/books
+```
+http http://localhost:8080/rest/v1/beer/1
+```
+### POST
+```
+http POST http://localhost:8080/rest/v1/beer <<< '{
+    "brand": "Anheuser-Busch Inbev",
+    "dateReleased": "2000-01-01",
+    "ingredients": [
+        {
+            "name": "Malta"
+        },
+        {
+            "name": "Agua"
+        }
+    ],
+    "name": "Cusqueña",
+    "origin": "Perú"
+}'
 ```
 ### PUT
-```console
-http --verify no PUT https://localhost:5001/api/rest/v1/books/1 < files/update_book.json
 ```
-### GET
-```console
-http --verify no https://localhost:5001/api/rest/v1/books/1
+http PUT http://localhost:8080/rest/v1/beer/3 <<< '{
+    "brand": "Other",
+    "dateReleased": "2001-01-01",
+    "name": "Cusqueñita",
+    "origin": "Perú - Ecuador"
+}'
 ```
 ### DELETE
-```console
-http --verify no DELETE https://localhost:5001/api/rest/v1/books/2
+```
+http DELETE http://localhost:8080/rest/v1/beer/3
 ```
 
-## Swagger
-http://localhost:8080/swagger/views/swagger-ui/
+## Micronaut 3.1.1 Documentation
+
+- [User Guide](https://docs.micronaut.io/3.1.1/guide/index.html)
+- [API Reference](https://docs.micronaut.io/3.1.1/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/3.1.1/guide/configurationreference.html)
+- [Micronaut Guides](https://guides.micronaut.io/index.html)
+---
+
+## Feature jdbc-hikari documentation
+
+- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
+
+## Feature http-client documentation
+
+- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+
+## Feature testcontainers documentation
+
+- [https://www.testcontainers.org/](https://www.testcontainers.org/)
+
+## Feature hibernate-jpa documentation
+
+- [Micronaut Hibernate JPA documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#hibernate)
+

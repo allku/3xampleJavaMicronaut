@@ -1,14 +1,13 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("io.micronaut.application") version "1.2.0"
+    id("com.github.johnrengelman.shadow") version "7.1.0"
+    id("io.micronaut.application") version "2.0.6"
 }
 
 version = "0.1"
-group = "example"
+group = "expert.allku"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 micronaut {
@@ -16,30 +15,32 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("example.*")
+        annotations("expert.allku.*")
     }
 }
 
 dependencies {
-    implementation("io.micronaut:micronaut-validation")
-    annotationProcessor("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-runtime")
-    implementation("javax.annotation:javax.annotation-api")
-    implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
-    implementation("io.micronaut.sql:micronaut-hibernate-jpa")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("javax.annotation:javax.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.postgresql:postgresql")
-    testRuntimeOnly("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:testcontainers")
+    implementation("io.micronaut:micronaut-validation")
+
 }
 
 
 application {
-    mainClass.set("example.Application")
+    mainClass.set("expert.allku.Application")
 }
-
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
     targetCompatibility = JavaVersion.toVersion("11")

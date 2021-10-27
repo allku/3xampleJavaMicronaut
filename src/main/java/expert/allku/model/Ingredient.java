@@ -1,16 +1,16 @@
-package example.model;
+package expert.allku.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "authors")
-public class Author {
+@Table(name = "ingredients")
+public class Ingredient {
 
-    public Author() { }
+    public Ingredient() { }
 
-    public Author(@NotNull String name) {
+    public Ingredient(@NotNull String name) {
         this.name = name;
     }
 
@@ -19,12 +19,13 @@ public class Author {
     private Integer id;
 
     @NotNull
-    @Column(name = "name", nullable = false, length=100)
+    @Column(name = "name", nullable = false, columnDefinition = "varchar")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
+    @JoinColumn(name = "beer_id",
+            foreignKey=@ForeignKey(name = "beer_ingredients_fkey"))
+    private Beer beer;
 
     public Integer getId() {
         return id;
@@ -43,19 +44,19 @@ public class Author {
     }
 
     @JsonBackReference
-    public Book getBook() {
-        return book;
+    public Beer getBeer() {
+        return beer;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBeer(Beer beer) {
+        this.beer = beer;
     }
 
     @Override
     public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name +
+        return "Ingredient {" +
+                "id =" + id +
+                ", name ='" + name +
                 '}';
     }
 }
