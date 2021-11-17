@@ -23,7 +23,7 @@ public class BeerDto {
 
   private Set<IngredientDto> ingredients = new HashSet<>();
 
-  public BeerDto() {}
+  public BeerDto() { }
 
   public BeerDto(String name, String brand, String origin, String dateReleased) {
     this.name = name;

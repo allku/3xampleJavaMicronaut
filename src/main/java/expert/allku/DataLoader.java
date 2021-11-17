@@ -2,28 +2,46 @@ package expert.allku;
 
 import expert.allku.dto.BeerDto;
 import expert.allku.dto.IngredientDto;
+import expert.allku.dto.LocationDto;
 import expert.allku.repository.BeerRepository;
+import expert.allku.repository.LocationRepository;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
 import jakarta.inject.Singleton;
 
-import javax.transaction.Transactional;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Singleton
 public class DataLoader implements ApplicationEventListener<ServerStartupEvent> {
 
     protected final BeerRepository beerRepository;
+    protected final LocationRepository locationRepository;
 
-    public DataLoader(BeerRepository beerRepository) {
+    public DataLoader(
+            BeerRepository beerRepository,
+            LocationRepository locationRepository) {
         this.beerRepository = beerRepository;
+        this.locationRepository = locationRepository;
     }
 
     @Override
     public void onApplicationEvent(ServerStartupEvent event) {
-       var beer1 = new BeerDto("Calenturienta",
+
+        var locationRoot = new LocationDto("Tierra", "", "Activo");
+
+        var america = new LocationDto("America", "", "Activo");
+        var europa = new LocationDto("Europa", "", "Activo");
+
+        america.getChildren().add(new LocationDto("Ecuador", "", "Activo"));
+        europa.getChildren().add(new LocationDto("Alemania", "", "Activo"));
+
+        locationRoot.getChildren()
+                .add(america);
+        locationRoot.getChildren()
+                .add(europa);
+
+        locationRepository.saveEarthContinentsCountries(locationRoot);
+
+        var beer1 = new BeerDto("Calenturienta",
                 "Cervezas Jorge Luis",
                 "Ecuador",
                 "2021-10-27");

@@ -1,12 +1,12 @@
 package expert.allku.model;
 
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "locations")
@@ -14,8 +14,7 @@ public class Location {
 
     public Location() { }
 
-    public Location(Integer id, String name, String observation, String status) {
-        this.id = id;
+    public Location(String name, String observation, String status) {
         this.name = name;
         this.observation = observation;
         this.status = status;
@@ -43,7 +42,7 @@ public class Location {
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Location> children;
+    private Set<Location> children;
 
     public Integer getId() {
         return id;
@@ -85,11 +84,11 @@ public class Location {
         this.parent = parent;
     }
 
-    public List<Location> getChildren() {
+    public Set<Location> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Location> children) {
+    public void setChildren(Set<Location> children) {
         this.children = children;
     }
 }
