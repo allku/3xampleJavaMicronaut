@@ -5,6 +5,7 @@ Basic example project in Java with Micronaut Framework
 * Java 11
 * Micronaut
 * Postgres 12 or above
+* Gradle 7.2
 
 ### Create database on GNU/Linux and MacOS with Postgres.app
 ```
