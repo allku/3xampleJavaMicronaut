@@ -16,19 +16,18 @@ public class BeerDto {
   private String brand;
 
   @NotBlank
-  private String origin;
+  private String dateReleased;
 
   @NotBlank
-  private String dateReleased;
+  private Integer locationId;
 
   private Set<IngredientDto> ingredients = new HashSet<>();
 
   public BeerDto() { }
 
-  public BeerDto(String name, String brand, String origin, String dateReleased) {
+  public BeerDto(String name, String brand, String dateReleased) {
     this.name = name;
     this.brand = brand;
-    this.origin = origin;
     this.dateReleased = dateReleased;
   }
 
@@ -48,14 +47,6 @@ public class BeerDto {
     this.brand = brand;
   }
 
-  public String getOrigin() {
-    return origin;
-  }
-
-  public void setOrigin(String origin) {
-    this.origin = origin;
-  }
-
   public String getDateReleased() {
     return dateReleased;
   }
@@ -70,5 +61,13 @@ public class BeerDto {
 
   public void setIngredients(Set<IngredientDto> ingredients) {
     this.ingredients = ingredients;
+  }
+
+  public Integer getLocationId() {
+    return locationId;
+  }
+
+  public void setLocationId(Integer locationId) {
+    this.locationId = locationId;
   }
 }

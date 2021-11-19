@@ -1,5 +1,6 @@
 package expert.allku.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -82,6 +83,7 @@ public class Location {
         this.status = status;
     }
 
+    @JsonBackReference
     public Location getParent() {
         return parent;
     }

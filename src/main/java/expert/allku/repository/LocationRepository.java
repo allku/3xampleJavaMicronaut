@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface LocationRepository {
 
     Optional<Location> findById(@NotNull Integer id);
+    Location findByName(@NotNull String name);
     List<Location> findAll();
     Location saveEarthContinentsCountries(@NotBlank LocationDto l);
 }

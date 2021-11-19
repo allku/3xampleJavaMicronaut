@@ -2,6 +2,7 @@ package expert.allku.repository;
 
 import expert.allku.dto.LocationDto;
 import expert.allku.model.Location;
+import io.micronaut.transaction.annotation.ReadOnly;
 import jakarta.inject.Singleton;
 
 import javax.persistence.EntityManager;
@@ -21,13 +22,28 @@ public class LocationRepositoryImpl implements LocationRepository {
     }
 
     @Override
+    @ReadOnly
     public Optional<Location> findById(Integer id) {
-        return Optional.empty();
+        return Optional.ofNullable(
+                entityManager.find(Location.class, id)
+        );
     }
 
     @Override
+    @ReadOnly
+    public Location findByName(String name) {
+        return (Location) entityManager
+                .createQuery("from Location " +
+                        "where name = :name")
+                .setParameter("name", name)
+                .getSingleResult();
+    }
+
+    @Override
+    @ReadOnly
     public List<Location> findAll() {
-        return null;
+        return entityManager.createQuery("from Location")
+                .getResultList();
     }
 
     @Override
