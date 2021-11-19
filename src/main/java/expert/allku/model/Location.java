@@ -5,7 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,12 +37,18 @@ public class Location {
     private String status;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @JoinColumn(name = "location_id",
+            referencedColumnName = "id",
+            foreignKey=@ForeignKey(name = "location_locations_fkey"))
     private Location parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Location> children;
+
+    @OneToMany(mappedBy = "location",
+            fetch= FetchType.EAGER)
+    private Set<Beer> beers = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -90,5 +96,13 @@ public class Location {
 
     public void setChildren(Set<Location> children) {
         this.children = children;
+    }
+
+    public Set<Beer> getBeers() {
+        return beers;
+    }
+
+    public void setBeers(Set<Beer> beers) {
+        this.beers = beers;
     }
 }

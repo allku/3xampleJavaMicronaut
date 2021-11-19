@@ -41,27 +41,27 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
 
         locationRepository.saveEarthContinentsCountries(locationRoot);
 
-        var beer1 = new BeerDto("Calenturienta",
-                "Cervezas Jorge Luis",
-                "Ecuador",
-                "2021-10-27");
+//        var beer1 = new BeerDto("Calenturienta",
+//                "Cervezas Jorge Luis",
+//                "Ecuador",
+//                "2021-10-27");
+//
+//        beer1.getIngredients().add(new IngredientDto("Malta"));
+//        beer1.getIngredients().add(new IngredientDto("Agua"));
+//        beer1.getIngredients().add(new IngredientDto("Canela"));
+//
+//        beerRepository.save(beer1);
+//
+//        var beer2 = new BeerDto("Pilsener",
+//                "Cervezas Nacionales",
+//                "Ecuador",
+//                "1990-01-01");
+//
+//        beer2.getIngredients().add(new IngredientDto("Malta"));
+//        beer2.getIngredients().add(new IngredientDto("Agua"));
+//
+//        beerRepository.save(beer2);
 
-        beer1.getIngredients().add(new IngredientDto("Malta"));
-        beer1.getIngredients().add(new IngredientDto("Agua"));
-        beer1.getIngredients().add(new IngredientDto("Canela"));
-
-        beerRepository.save(beer1);
-
-        var beer2 = new BeerDto("Pilsener",
-                "Cervezas Nacionales",
-                "Ecuador",
-                "1990-01-01");
-
-        beer2.getIngredients().add(new IngredientDto("Malta"));
-        beer2.getIngredients().add(new IngredientDto("Agua"));
-
-        beerRepository.save(beer2);
-
-        System.out.println("Insert beers and ingredients");
+        System.out.println("Insert data");
     }
 }

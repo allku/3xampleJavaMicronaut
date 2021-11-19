@@ -51,7 +51,6 @@ public class BeerRepositoryImpl implements BeerRepository {
 
     var beer = new Beer(b.getName(),
             b.getBrand(),
-            b.getOrigin(),
             date);
 
     var iterator = b.getIngredients().iterator();
@@ -87,7 +86,6 @@ public class BeerRepositoryImpl implements BeerRepository {
 
       beer.setName(b.getName());
       beer.setBrand(b.getBrand());
-      beer.setOrigin(b.getOrigin());
       beer.setDateReleased(date);
       entityManager.persist(beer);
     }

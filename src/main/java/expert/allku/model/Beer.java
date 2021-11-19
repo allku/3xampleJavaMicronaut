@@ -18,11 +18,9 @@ public class Beer {
 
     public Beer(@NotNull String name,
                 @NotNull String brand,
-                @NotNull String origin,
                 @NotNull Date dateReleased) {
         this.name = name;
         this.brand = brand;
-        this.origin = origin;
         this.dateReleased = dateReleased;
     }
 
@@ -39,10 +37,6 @@ public class Beer {
     private String brand;
 
     @NotNull
-    @Column(name = "origin", nullable = false, columnDefinition = "varchar")
-    private String origin;
-
-    @NotNull
     @Column(name = "date_released", nullable = false)
     private Date dateReleased;
 
@@ -52,6 +46,12 @@ public class Beer {
             fetch= FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Ingredient> ingredients = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "location_id",
+            referencedColumnName = "id",
+            foreignKey=@ForeignKey(name = "location_beers_fkey"))
+    private Location location;
 
     public Integer getId() {
         return id;
@@ -77,14 +77,6 @@ public class Beer {
         this.brand = brand;
     }
 
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
     public Date getDateReleased() {
         return dateReleased;
     }
@@ -102,13 +94,20 @@ public class Beer {
         this.ingredients = ingredients;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     @Override
     public String toString() {
         return "Beer {" +
                 "id =" + id +
                 ", name ='" + name + '\'' +
                 ", brand ='" + brand + '\'' +
-                ", origin ='" + origin + '\'' +
                 ", dateReleased =" + dateReleased +
                 '}';
     }
