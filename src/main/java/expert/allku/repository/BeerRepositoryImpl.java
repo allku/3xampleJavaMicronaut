@@ -66,10 +66,11 @@ public class BeerRepositoryImpl implements BeerRepository {
 
         beer.setIngredients(ingredients);
 
+        // Verify if exist location id in database
         if (b.getLocationId() != null) {
             var location = locationRepository
                     .findById(b.getLocationId());
-
+            // If exist then assign location
             if (location.isPresent())
                 beer.setLocation(location.get());
         }
