@@ -60,6 +60,9 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
                 "Cervezas Nacionales",
                 "1990-01-01");
 
+        if (locationBeer.isPresent())
+            beer2.setLocationId(locationBeer.get().getId());
+
         beer2.getIngredients().add(new IngredientDto("Malta"));
         beer2.getIngredients().add(new IngredientDto("Agua"));
 
