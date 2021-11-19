@@ -22,8 +22,8 @@ public class LocationController {
 
     @Get(value = "/locationbyname/{name}")
     public Location showByName(String name) {
-        System.out.println(name);
-        var location = locationRepository.findByName(name);
+        var location = locationRepository
+                .findByName(name).orElse(null);
         return location;
     }
 }

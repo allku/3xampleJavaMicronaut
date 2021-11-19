@@ -31,12 +31,15 @@ public class LocationRepositoryImpl implements LocationRepository {
 
     @Override
     @ReadOnly
-    public Location findByName(String name) {
-        return (Location) entityManager
-                .createQuery("from Location " +
-                        "where name = :name")
-                .setParameter("name", name)
-                .getSingleResult();
+    public Optional<Location> findByName(String name) {
+
+        return Optional.ofNullable(
+                (Location) entityManager
+                        .createQuery("from Location " +
+                                "where name = :name")
+                        .setParameter("name", name)
+                        .getSingleResult()
+        );
     }
 
     @Override

@@ -41,13 +41,14 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
 
         locationRepository.saveEarthContinentsCountries(locationRoot);
 
-        var place = locationRepository.findByName(america.getName());
+        var locationBeer = locationRepository.findByName(america.getName());
 
         var beer1 = new BeerDto("Calenturienta",
                 "Cervezas Jorge Luis",
                 "2021-10-27");
 
-        beer1.setLocationId(place.getId());
+        if (locationBeer.isPresent())
+            beer1.setLocationId(locationBeer.get().getId());
 
         beer1.getIngredients().add(new IngredientDto("Malta"));
         beer1.getIngredients().add(new IngredientDto("Agua"));
