@@ -35,6 +35,7 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     implementation("io.micronaut:micronaut-validation")
 
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.7'
 }
 
 
