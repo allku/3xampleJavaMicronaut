@@ -25,14 +25,14 @@ public class ViewLoader implements ApplicationEventListener<ServerStartupEvent> 
 
     @Override
     public void onApplicationEvent(ServerStartupEvent event) {
-        HikariDataSource datasource = new HikariDataSource();
-        datasource.setJdbcUrl(this.url);
-        datasource.setDriverClassName(this.driverClassName);
-        datasource.setUsername(this.username);
-        datasource.setPassword(this.password);
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(this.url);
+        dataSource.setDriverClassName(this.driverClassName);
+        dataSource.setUsername(this.username);
+        dataSource.setPassword(this.password);
 
         try {
-            Connection connection = datasource.getConnection();
+            Connection connection = dataSource.getConnection();
             ScriptRunner runner = new ScriptRunner(connection);
 
 
@@ -48,9 +48,7 @@ public class ViewLoader implements ApplicationEventListener<ServerStartupEvent> 
             runner.runScript(createView);
 
             connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }
 
