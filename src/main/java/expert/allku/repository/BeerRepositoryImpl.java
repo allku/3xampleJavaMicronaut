@@ -1,8 +1,12 @@
 package expert.allku.repository;
 
-import expert.allku.dto.BeerDto;
+import expert.allku.dto.BeerDtoIn;
+import expert.allku.dto.BeerDtoOut;
+import expert.allku.dto.IngredientDto;
+import expert.allku.dto.IngredientDtoOut;
 import expert.allku.model.Beer;
 import expert.allku.model.Ingredient;
+import expert.allku.model.Location;
 import io.micronaut.transaction.annotation.ReadOnly;
 import jakarta.inject.Singleton;
 
@@ -26,10 +30,28 @@ public class BeerRepositoryImpl implements BeerRepository {
 
     @Override
     @ReadOnly
-    public Optional<Beer> findById(Integer id) {
-        return Optional.ofNullable(
-                entityManager.find(Beer.class, id)
+    public Optional<BeerDtoOut> findById(Integer id) {
+        var beer = entityManager.find(Beer.class, id);
+        var beerOut = new BeerDtoOut(
+                beer.getId(),
+                beer.getName(),
+                beer.getBrand(),
+                beer.getDateReleased()
         );
+
+        beerOut.setLocationId(beer.getLocation().getId());
+
+        var iterator = beer.getIngredients().iterator();
+        while (iterator.hasNext()) {
+            var ingredient = iterator.next();
+
+            beerOut.getIngredients()
+                    .add(new IngredientDtoOut(
+                            ingredient.getId(),
+                            ingredient.getName()));
+        }
+
+        return Optional.ofNullable(beerOut);
     }
 
     @Override
@@ -41,7 +63,7 @@ public class BeerRepositoryImpl implements BeerRepository {
 
     @Override
     @Transactional
-    public Beer save(BeerDto b) {
+    public Beer save(BeerDtoIn b) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 
         var date = new Date();
@@ -81,7 +103,7 @@ public class BeerRepositoryImpl implements BeerRepository {
 
     @Override
     @Transactional
-    public int update(@NotNull Integer id, @NotNull BeerDto b) {
+    public int update(@NotNull Integer id, @NotNull BeerDtoIn b) {
         var beer = entityManager.find(Beer.class, id);
         if (beer == null)
             return 0;

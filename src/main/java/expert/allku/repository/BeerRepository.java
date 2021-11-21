@@ -1,6 +1,7 @@
 package expert.allku.repository;
 
-import expert.allku.dto.BeerDto;
+import expert.allku.dto.BeerDtoIn;
+import expert.allku.dto.BeerDtoOut;
 import expert.allku.model.Beer;
 
 import javax.validation.constraints.NotBlank;
@@ -10,9 +11,9 @@ import java.util.Optional;
 
 public interface BeerRepository {
 
-    Optional<Beer> findById(@NotNull Integer id);
+    Optional<BeerDtoOut> findById(@NotNull Integer id);
     List<Beer> findAll();
-    Beer save(@NotBlank BeerDto b);
-    int update(@NotNull Integer id, @NotBlank BeerDto b);
+    Beer save(@NotBlank BeerDtoIn b);
+    int update(@NotNull Integer id, @NotBlank BeerDtoIn b);
     void delete(@NotNull Integer id);
 }

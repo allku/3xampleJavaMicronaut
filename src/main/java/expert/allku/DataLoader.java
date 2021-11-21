@@ -1,6 +1,6 @@
 package expert.allku;
 
-import expert.allku.dto.BeerDto;
+import expert.allku.dto.BeerDtoIn;
 import expert.allku.dto.IngredientDto;
 import expert.allku.dto.LocationDto;
 import expert.allku.repository.BeerRepository;
@@ -43,7 +43,7 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
 
         var locationBeer = locationRepository.findByName(america.getName());
 
-        var beer1 = new BeerDto("Calenturienta",
+        var beer1 = new BeerDtoIn("Calenturienta",
                 "Cervezas Jorge Luis",
                 "2021-10-27");
 
@@ -56,7 +56,7 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
 
         beerRepository.save(beer1);
 
-        var beer2 = new BeerDto("Pilsener",
+        var beer2 = new BeerDtoIn("Pilsener",
                 "Cervezas Nacionales",
                 "1990-01-01");
 

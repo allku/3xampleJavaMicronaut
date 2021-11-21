@@ -1,6 +1,7 @@
 package expert.allku.controller;
 
-import expert.allku.dto.BeerDto;
+import expert.allku.dto.BeerDtoIn;
+import expert.allku.dto.BeerDtoOut;
 import expert.allku.model.Beer;
 import expert.allku.repository.BeerRepository;
 import io.micronaut.http.HttpResponse;
@@ -25,15 +26,15 @@ public class BeerController {
   }
 
   @Get(value = "/beer/{id}")
-  public Beer show(Integer id) {
+  public BeerDtoOut show(Integer id) {
     var beer = beerRepository
             .findById(id).orElse(null);
     return beer;
   }
 
   @Post(value = "/beer")
-  public HttpResponse<Beer> save(@Body @Valid BeerDto beerDto) {
-    Beer beer = beerRepository.save(beerDto);
+  public HttpResponse<Beer> save(@Body @Valid BeerDtoIn beerDtoIn) {
+    Beer beer = beerRepository.save(beerDtoIn);
 
     return HttpResponse
             .created(beer)
@@ -41,8 +42,8 @@ public class BeerController {
   }
 
   @Put(value = "/beer/{id}")
-  public HttpResponse update(Integer id, @Body @Valid BeerDto beerDto) {
-    var beerId = beerRepository.update(id, beerDto);
+  public HttpResponse update(Integer id, @Body @Valid BeerDtoIn beerDtoIn) {
+    var beerId = beerRepository.update(id, beerDtoIn);
 
     return HttpResponse
             .noContent()
