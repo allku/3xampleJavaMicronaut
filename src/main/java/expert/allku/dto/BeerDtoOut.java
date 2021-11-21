@@ -21,6 +21,10 @@ public class BeerDtoOut {
 
   private Set<IngredientDtoOut> ingredients = new HashSet<>();
 
+  private String origin;
+
+  private String location;
+
   public BeerDtoOut() { }
 
   public BeerDtoOut(Integer id,String name, String brand, Date dateReleased) {
@@ -76,5 +80,21 @@ public class BeerDtoOut {
 
   public void setDateReleased(Date dateReleased) {
     this.dateReleased = dateReleased;
+  }
+
+  public String getOrigin() {
+    return origin;
+  }
+
+  public void setOrigin(String origin) {
+    this.origin = origin;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
   }
 }

@@ -2,6 +2,7 @@ package expert.allku.repository;
 
 import expert.allku.dto.LocationDto;
 import expert.allku.model.Location;
+import expert.allku.model.LocationView;
 import io.micronaut.transaction.annotation.ReadOnly;
 import jakarta.inject.Singleton;
 
@@ -26,6 +27,14 @@ public class LocationRepositoryImpl implements LocationRepository {
     public Optional<Location> findById(Integer id) {
         return Optional.ofNullable(
                 entityManager.find(Location.class, id)
+        );
+    }
+
+    @Override
+    @ReadOnly
+    public Optional<LocationView> findViewById(Integer id) {
+        return Optional.ofNullable(
+                entityManager.find(LocationView.class, id)
         );
     }
 

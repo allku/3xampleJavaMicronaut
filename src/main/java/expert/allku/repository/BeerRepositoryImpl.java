@@ -39,7 +39,13 @@ public class BeerRepositoryImpl implements BeerRepository {
                 beer.getDateReleased()
         );
 
-        beerOut.setLocationId(beer.getLocation().getId());
+        var location = locationRepository.findViewById(beer.getLocation().getId());
+
+        if (location.isPresent()) {
+            beerOut.setLocationId(location.get().getId());
+            beerOut.setOrigin(location.get().getName());
+            beerOut.setLocation(location.get().getLocation());
+        }
 
         var iterator = beer.getIngredients().iterator();
         while (iterator.hasNext()) {

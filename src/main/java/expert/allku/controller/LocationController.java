@@ -1,6 +1,7 @@
 package expert.allku.controller;
 
 import expert.allku.model.Location;
+import expert.allku.model.LocationView;
 import expert.allku.repository.LocationRepository;
 import io.micronaut.http.annotation.*;
 
@@ -14,9 +15,9 @@ public class LocationController {
     }
 
     @Get(value = "/location/{id}")
-    public Location show(Integer id) {
+    public LocationView show(Integer id) {
         var location = locationRepository
-                .findById(id).orElse(null);
+                .findViewById(id).orElse(null);
         return location;
     }
 
