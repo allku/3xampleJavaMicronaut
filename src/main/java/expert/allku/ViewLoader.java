@@ -36,7 +36,8 @@ public class ViewLoader implements ApplicationEventListener<ServerStartupEvent> 
             ScriptRunner runner = new ScriptRunner(connection);
 
 
-            Reader inputString = new StringReader("drop table if exists v_locations");
+            Reader inputString = new StringReader(
+                    "drop table if exists v_locations;");
             BufferedReader dropTable = new BufferedReader(inputString);
 
             Reader createView = new BufferedReader(

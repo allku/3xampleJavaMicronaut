@@ -1,5 +1,6 @@
 package expert.allku.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -94,6 +95,7 @@ public class Beer {
         this.ingredients = ingredients;
     }
 
+    @JsonBackReference
     public Location getLocation() {
         return location;
     }
