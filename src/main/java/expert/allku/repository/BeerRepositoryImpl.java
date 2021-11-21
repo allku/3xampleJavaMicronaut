@@ -2,11 +2,9 @@ package expert.allku.repository;
 
 import expert.allku.dto.BeerDtoIn;
 import expert.allku.dto.BeerDtoOut;
-import expert.allku.dto.IngredientDto;
 import expert.allku.dto.IngredientDtoOut;
 import expert.allku.model.Beer;
 import expert.allku.model.Ingredient;
-import expert.allku.model.Location;
 import io.micronaut.transaction.annotation.ReadOnly;
 import jakarta.inject.Singleton;
 

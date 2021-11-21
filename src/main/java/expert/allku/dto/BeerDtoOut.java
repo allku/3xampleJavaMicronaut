@@ -1,5 +1,6 @@
 package expert.allku.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.core.annotation.Introspected;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ public class BeerDtoOut {
 
   private String brand;
 
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private Date dateReleased;
 
   private Integer locationId;
