@@ -39,7 +39,7 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
         locationRoot.getChildren()
                 .add(europa);
 
-        locationRepository.saveEarthContinentsCountries(locationRoot);
+        locationRepository.save(locationRoot);
 
         var locationBeer = locationRepository.findByName(america.getName());
 

@@ -15,5 +15,6 @@ public interface LocationRepository {
     Optional<LocationView> findViewById(@NotNull Integer id);
     Optional<Location> findByName(@NotNull String name);
     List<Location> findAll();
-    Location saveEarthContinentsCountries(@NotBlank LocationDto l);
+    Location save(@NotBlank LocationDto l);
+    Location saveEarthContinentsCountriesDeprecated(@NotBlank LocationDto l);
 }

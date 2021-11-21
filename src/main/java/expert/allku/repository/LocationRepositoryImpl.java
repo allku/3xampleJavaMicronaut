@@ -8,10 +8,7 @@ import jakarta.inject.Singleton;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Singleton
 public class LocationRepositoryImpl implements LocationRepository {
@@ -60,7 +57,59 @@ public class LocationRepositoryImpl implements LocationRepository {
 
     @Override
     @Transactional
-    public Location saveEarthContinentsCountries(LocationDto l) {
+    public Location save(LocationDto l) {
+
+        var mainLocation = new Location(
+                l.getName(),
+                l.getObservation(),
+                l.getStatus());
+
+        mainLocation = assignLocations(l.getChildren().iterator(), mainLocation);
+
+        entityManager.persist(mainLocation);
+        return mainLocation;
+    }
+
+    /**
+     * Recursive method to assign location data transfer to location model
+     * @param locationDataIterator
+     * @param parent
+     * @return
+     */
+    private Location assignLocations(Iterator<LocationDto> locationDataIterator, Location parent) {
+
+        Set<Location> locationChildren = new HashSet<>();
+
+        while (locationDataIterator.hasNext()) {
+            var locationData = locationDataIterator.next();
+
+            var location = new Location(
+                    locationData.getName(),
+                    locationData.getObservation(),
+                    locationData.getStatus()
+            );
+            location = assignLocations(
+                    locationData.getChildren().iterator(),
+                    location
+            );
+            location.setParent(parent);
+            locationChildren.add(location);
+        }
+
+        if (!locationChildren.isEmpty())
+            parent.setChildren(locationChildren);
+
+        return parent;
+    }
+
+    /**
+     * Method for save location in model location, only support 3 levels
+     * @param l
+     * @return
+     */
+    @Override
+    @Transactional
+    public Location saveEarthContinentsCountriesDeprecated(LocationDto l) {
 
         var locationEarth = new Location(
                 l.getName(),
