@@ -1,5 +1,6 @@
 package expert.allku.repository;
 
+import expert.allku.dto.BeerDtoForList;
 import expert.allku.dto.BeerDtoIn;
 import expert.allku.dto.BeerDtoOut;
 import expert.allku.dto.IngredientDtoOut;
@@ -16,14 +17,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Singleton
-public class BeerRepositoryImpl implements BeerRepository {
+public class BeerRepo implements IBeerRepo {
 
     private final EntityManager entityManager;
-    protected final LocationRepository locationRepository;
+    protected final ILocationRepo ILocationRepo;
 
-    public BeerRepositoryImpl(EntityManager entityManager, LocationRepository locationRepository) {
+    public BeerRepo(EntityManager entityManager, ILocationRepo ILocationRepo) {
         this.entityManager = entityManager;
-        this.locationRepository = locationRepository;
+        this.ILocationRepo = ILocationRepo;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class BeerRepositoryImpl implements BeerRepository {
         );
 
         if (beer.getLocation() != null) {
-            var location = locationRepository.findViewById(beer.getLocation().getId());
+            var location = ILocationRepo.findViewById(beer.getLocation().getId());
 
             if (location.isPresent()) {
                 beerOut.setLocationId(location.get().getId());
@@ -64,10 +65,40 @@ public class BeerRepositoryImpl implements BeerRepository {
     }
 
     @Override
+    public Optional<Beer> findByIdEasy(Integer id) {
+        return Optional.ofNullable(entityManager.find(Beer.class, id));
+    }
+
+    @Override
     @ReadOnly
-    public List<Beer> findAll() {
-        return entityManager.createQuery("from Beer")
+    public List<BeerDtoForList> findAll() {
+        List<Beer> beers = entityManager.createQuery("from Beer")
                 .getResultList();
+
+        List<BeerDtoForList> beerDtoForListing = new ArrayList<>();
+        var iterator = beers.iterator();
+        while (iterator.hasNext()) {
+            var beer = new BeerDtoForList();
+            var b = iterator.next();
+            beer.setId(b.getId());
+            beer.setName(b.getName());
+            beer.setBrand(b.getBrand());
+            beer.setDateReleased(b.getDateReleased());
+
+            if (b.getLocation() != null) {
+                beer.setLocationId(b.getLocation().getId());
+                var location = ILocationRepo.findViewById(b.getLocation().getId());
+
+                if (location.isPresent()) {
+                    beer.setLocation(location.get().getLocation());
+                    beer.setOrigin(location.get().getName());
+                }
+            }
+
+            beerDtoForListing.add(beer);
+        }
+
+        return beerDtoForListing;
     }
 
     @Override
@@ -99,7 +130,7 @@ public class BeerRepositoryImpl implements BeerRepository {
 
         // Verify if exist location id in database
         if (b.getLocationId() != null) {
-            var location = locationRepository
+            var location = ILocationRepo
                     .findById(b.getLocationId());
             // If exist then assign location
             if (location.isPresent())

@@ -1,10 +1,11 @@
 package expert.allku.controller;
 
+import expert.allku.dto.BeerDtoForList;
 import expert.allku.dto.BeerDtoIn;
-import expert.allku.dto.BeerDtoOut;
 import expert.allku.dto.Message;
+import expert.allku.dto.MessageDelete;
 import expert.allku.model.Beer;
-import expert.allku.repository.BeerRepository;
+import expert.allku.repository.IBeerRepo;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 
@@ -15,14 +16,14 @@ import java.util.List;
 @Controller("/rest/v1")
 public class BeerController {
 
-  protected final BeerRepository beerRepository;
+  protected final IBeerRepo beerRepository;
 
-  public BeerController(BeerRepository beerRepository) {
+  public BeerController(IBeerRepo beerRepository) {
     this.beerRepository = beerRepository;
   }
 
   @Get(value = "/beers")
-  public List<Beer> all() {
+  public List<BeerDtoForList> all() {
     return beerRepository.findAll();
   }
 
@@ -56,9 +57,19 @@ public class BeerController {
   }
 
   @Delete(value = "/beer/{id}")
-  public HttpResponse delete(Integer id) {
+  public HttpResponse<?> delete(Integer id) {
+    var beer = beerRepository
+            .findById(id).orElse(null);
+
+    if (beer == null) {
+      return HttpResponse.notFound(new Message("Beer not found"));
+    }
+
     beerRepository.delete(id);
-    return HttpResponse.noContent();
+    return HttpResponse.ok(new MessageDelete(
+            beer.getId(),
+            beer.getName()
+    ));
   }
 
   protected URI location(Integer id) {

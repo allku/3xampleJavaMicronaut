@@ -51,12 +51,4 @@ public class Ingredient {
     public void setBeer(Beer beer) {
         this.beer = beer;
     }
-
-    @Override
-    public String toString() {
-        return "Ingredient {" +
-                "id =" + id +
-                ", name ='" + name +
-                '}';
-    }
 }

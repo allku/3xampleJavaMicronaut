@@ -103,14 +103,4 @@ public class Beer {
     public void setLocation(Location location) {
         this.location = location;
     }
-
-    @Override
-    public String toString() {
-        return "Beer {" +
-                "id =" + id +
-                ", name ='" + name + '\'' +
-                ", brand ='" + brand + '\'' +
-                ", dateReleased =" + dateReleased +
-                '}';
-    }
 }

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public interface LocationRepository {
+public interface ILocationRepo {
 
     Optional<Location> findById(@NotNull Integer id);
     Optional<LocationView> findViewById(@NotNull Integer id);

@@ -3,8 +3,8 @@ package expert.allku;
 import expert.allku.dto.BeerDtoIn;
 import expert.allku.dto.IngredientDto;
 import expert.allku.dto.LocationDto;
-import expert.allku.repository.BeerRepository;
-import expert.allku.repository.LocationRepository;
+import expert.allku.repository.IBeerRepo;
+import expert.allku.repository.ILocationRepo;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
 import jakarta.inject.Singleton;
@@ -13,14 +13,14 @@ import jakarta.inject.Singleton;
 @Singleton
 public class DataLoader implements ApplicationEventListener<ServerStartupEvent> {
 
-    protected final BeerRepository beerRepository;
-    protected final LocationRepository locationRepository;
+    protected final IBeerRepo beerRepository;
+    protected final ILocationRepo ILocationRepo;
 
     public DataLoader(
-            BeerRepository beerRepository,
-            LocationRepository locationRepository) {
+            IBeerRepo beerRepository,
+            ILocationRepo ILocationRepo) {
         this.beerRepository = beerRepository;
-        this.locationRepository = locationRepository;
+        this.ILocationRepo = ILocationRepo;
     }
 
     @Override
@@ -39,9 +39,9 @@ public class DataLoader implements ApplicationEventListener<ServerStartupEvent> 
         locationRoot.getChildren()
                 .add(europa);
 
-        locationRepository.save(locationRoot);
+        ILocationRepo.save(locationRoot);
 
-        var locationBeer = locationRepository.findByName(america.getName());
+        var locationBeer = ILocationRepo.findByName(america.getName());
 
         var beer1 = new BeerDtoIn("Calenturienta",
                 "Cervezas Jorge Luis",

@@ -11,11 +11,11 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Singleton
-public class LocationRepositoryImpl implements LocationRepository {
+public class LocationRepo implements ILocationRepo {
 
     private final EntityManager entityManager;
 
-    public LocationRepositoryImpl(EntityManager entityManager) {
+    public LocationRepo(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
