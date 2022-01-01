@@ -30,6 +30,9 @@ public class BeerRepositoryImpl implements BeerRepository {
     @ReadOnly
     public Optional<BeerDtoOut> findById(Integer id) {
         var beer = entityManager.find(Beer.class, id);
+
+        if (beer == null) return Optional.empty();
+
         var beerOut = new BeerDtoOut(
                 beer.getId(),
                 beer.getName(),

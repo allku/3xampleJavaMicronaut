@@ -12,7 +12,7 @@ Basic example project in Java with Micronaut Framework
 createdb ejavamicronaut
 ```
 ```
-createuser jojelu
+createuser jorgeluis
 ```
 ```
 psql
@@ -22,14 +22,18 @@ or
 psql -d database -U user -W
 ```
 ```
-grant all privileges on database ejavamicronaut to jojelu;
+grant all privileges on database ejavamicronaut to jorgeluis;
 ```
 ```
-alter user jojelu with encrypted password 'j';
+alter user jorgeluis with encrypted password 'j';
 ```
 ### Run
 ```
 gradle run 
+```
+### Run Hot Reload
+```
+gradle run --continuous
 ```
 ## Test
 Use HTTPie

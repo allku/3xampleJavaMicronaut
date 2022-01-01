@@ -2,6 +2,7 @@ package expert.allku.controller;
 
 import expert.allku.dto.BeerDtoIn;
 import expert.allku.dto.BeerDtoOut;
+import expert.allku.dto.Message;
 import expert.allku.model.Beer;
 import expert.allku.repository.BeerRepository;
 import io.micronaut.http.HttpResponse;
@@ -26,10 +27,14 @@ public class BeerController {
   }
 
   @Get(value = "/beer/{id}")
-  public BeerDtoOut show(Integer id) {
+  public HttpResponse<?> show(Integer id) {
     var beer = beerRepository
             .findById(id).orElse(null);
-    return beer;
+
+    if (beer == null) {
+      return HttpResponse.notFound(new Message("Beer not found"));
+    }
+    return HttpResponse.ok(beer);
   }
 
   @Post(value = "/beer")
